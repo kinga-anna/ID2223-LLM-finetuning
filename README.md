@@ -8,14 +8,23 @@ Next we investigated ways to improve pipeline scalability and model performance
 (b) data-centric ways to improve include using a bigger or better dataset to train on. For one, we found a [deduplicated version of the Finetome 100K dataset](https://huggingface.co/datasets/mlabonne/FineTome-100k-dedup) we used, which is a pretty straight-forward way to get "better" data. Another idea we discussed was using a less generalised dataset of comparable size to create a more specialised chatbot.
 
 ## Comparing different foundation LLMS we have finetuned
-Since inference is done on CPUs, there is an important trade-off we realised between the size of the model and its performance. For this reason, we decided to primarily focus our comparison on the Llama-3.2 1 billion parameter and 3 billion parameter versions.
+Since inference is done on CPUs, there is an important trade-off between the size of the model and its performance. For this reason, we decided to primarily focus our comparison on the Llama-3.2 1 billion parameter and 3 billion parameter versions.
 
-To evaluate the performance of the models, we fed both of them the following prompts: 
-- Continue the fibonnaci sequence: 1, 1, 2, 3, 5, 8,
-- Describe a tall tower in the capital of France.
-maybe more? these two are from the notebook
+To evaluate the performance of the models, we fed both of them the following evaluation prompts: 
+- Explain quantum computing to a 10-year-old.
+- Write a short poem about artificial intelligence.
+- What are the main differences between Python and JavaScript?
+- How does photosynthesis work?
+- Continue the Fibonacci sequence: 1, 1, 2, 3, 5, 8,
+- Describe the water cycle in simple terms.
+- What is the capital of France and what is it famous for?
+- Explain why the sky is blue.
+- Write a haiku about programming.
+- What are three tips for learning a new language?
 
 
 ### unsloth/Llama-3.2-3B-Instruct
 
 ### unsloth/Llama-3.2-1B-Instruct
+
+In the end, we found that we prefer the responses from the 3B version and have therefore decided to use that for our chatbot. Note: since we fine-tuned the two models on different GPUs (the T4 and A100 available on Colab), we cannot directly compare their training time, but we suspect that would be another reason to choose the smaller model.
