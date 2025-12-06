@@ -7,10 +7,10 @@ Next we investigated ways to improve pipeline scalability and model performance 
 (a) model-centric ways to improve the model performance include changing the learning rate, the batch size, or the weight-deacy parameter, or even implementing early stopping. We might also focus on the LoRA configuration and analyse the impact of different LoRA hyperparameters such as rank, alpha, and dropout. \
 (b) data-centric ways to improve include using a bigger or better dataset to train on. For one, we found a [deduplicated version of the Finetome 100K dataset](https://huggingface.co/datasets/mlabonne/FineTome-100k-dedup) we used, which is a pretty straight-forward way to get "better" data. Another idea we discussed was using a less generalised dataset of comparable size to create a more specialised chatbot.
 
-## Comparing different foundation LLMS we have finetuned
-Since inference is done on CPUs, there is an important trade-off between the size of the model and its performance. For this reason, we decided to primarily focus our comparison on the Llama-3.2 1 billion parameter and 3 billion parameter versions.
+## Comparing different foundation LLMs we have finetuned
+Since inference is done on CPUs, there is an important trade-off between the size of the model and its performance. We evaluated three fine-tuned models to determine which provides the best balance of quality and practicality.
 
-To evaluate the performance of the models, we fed both of them the following evaluation prompts: 
+To evaluate the performance of the models, we fed all of them the following evaluation prompts:
 - Explain quantum computing to a 10-year-old.
 - Write a short poem about artificial intelligence.
 - What are the main differences between Python and JavaScript?
@@ -22,9 +22,24 @@ To evaluate the performance of the models, we fed both of them the following eva
 - Write a haiku about programming.
 - What are three tips for learning a new language?
 
+### Evaluation Results
 
-### unsloth/Llama-3.2-3B-Instruct
+We conducted a voting comparison across all 10 prompts. The results were:
 
-### unsloth/Llama-3.2-1B-Instruct
+| Model | Base Model | Votes | Percentage |
+|-------|------------|-------|------------|
+| lora_model_merged | Llama-3.2-3B-Instruct | 7 | 70% |
+| lora_model_merged_2 | Llama-3.2-1B-Instruct | 2 | 20% |
+| lora_model_merged_3 | TBD | 1 | 10% |
 
-In the end, we found that we prefer the responses from the 3B version and have therefore decided to use that for our chatbot. Note: since we fine-tuned the two models on different GPUs (the T4 and A100 available on Colab), we cannot directly compare their training time, but we suspect that would be another reason to choose the smaller model.
+### Model Analysis
+
+**Llama-3.2-3B-Instruct (lora_model_merged)**: The 3B model was the clear winner. Our intuition felt its responses were generally more consice and relevant to the prompts while the others tended to go off-topic. One of the best exampels of this is comparison of JavaScript and Python where 3B provided correct facts while the others talked about manual vs. automatic memory management which is not differentiating these languages.
+
+**Llama-3.2-1B-Instruct (lora_model_merged_2)**: The 1B model provided serviceable responses but often lacked the depth and polish of the 3B version. It performed adequately on straightforward factual questions but struggled with more creative or complex prompts.
+
+**Third Model (lora_model_merged_3)**: TBD
+
+### Conclusion
+
+Based on our evaluation, we chose the 3B model (lora_model_merged) for our chatbot despite its larger size. The significant quality improvement (70% preference rate) justifies the additional computational requirements for inference and training
