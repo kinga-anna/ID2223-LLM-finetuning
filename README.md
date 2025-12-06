@@ -1,6 +1,6 @@
 # Lab 2 for KTH course ID2223 Scalable Machine Learning and Deep Learning
 
-For this lab assignment we performed Parameter Efficient Fine-Tuning (PEFT) of a Large Language Model with LoRA on the Finetome dataset. Training was done on Google Colab's T4 GPU supplemented with additional RAM. Periodic checkpointing of the weigths was required due to Colab's usage limits, so that training can be restarted from where it left off. The fine tuned LLM is saved to Hugging Face and converted to a GGUF format since Hugging Face only provides free CPU resources for inference. Finally, this fine tuned LLM is available to be used in our chatbot [here](https://chatbot-81yytoeishc.streamlit.app/).
+For this lab assignment we performed Parameter Efficient Fine-Tuning (PEFT) of a Large Language Model with LoRA on the Finetome dataset. Training was done on Google Colab's T4 GPU supplemented with additional RAM. Periodic checkpointing of the weigths was required due to Colab's usage limits, so that training can be restarted from where it left off. The fine tuned LLM is saved to Hugging Face and converted to a GGUF format since Hugging Face only provides free CPU resources for inference. Finally, this fine tuned LLM is available to be used in our chatbot [here](https://chatbot-81yytoeishc.streamlit.app/). The source code for the Streamlit app is in a [separate repository](https://github.com/Edwinexd/streamlit-test).
 
 ## Task 2
 Next we investigated ways to improve pipeline scalability and model performance \
@@ -30,15 +30,15 @@ We conducted a voting comparison across all 10 prompts. The results were:
 |-------|------------|-------|------------|
 | lora_model_merged | Llama-3.2-3B-Instruct | 7 | 70% |
 | lora_model_merged_2 | Llama-3.2-1B-Instruct | 2 | 20% |
-| lora_model_merged_3 | TBD | 1 | 10% |
+| lora_model_merged_3 | Llama-3.2-1B-Instruct (dedup dataset) | 1 | 10% |
 
 ### Model Analysis
 
-**Llama-3.2-3B-Instruct (lora_model_merged)**: The 3B model was the clear winner. Our intuition felt its responses were generally more consice and relevant to the prompts while the others tended to go off-topic. One of the best exampels of this is comparison of JavaScript and Python where 3B provided correct facts while the others talked about manual vs. automatic memory management which is not differentiating these languages.
+**Llama-3.2-3B-Instruct (lora_model_merged)**: The 3B model was the clear winner. Our intuition felt its responses were generally more concise and relevant to the prompts while the others tended to go off-topic. One of the best examples of this is comparison of JavaScript and Python where 3B provided correct facts while the others talked about manual vs. automatic memory management which is not differentiating these languages.
 
 **Llama-3.2-1B-Instruct (lora_model_merged_2)**: The 1B model provided serviceable responses but often lacked the depth and polish of the 3B version. It performed adequately on straightforward factual questions but struggled with more creative or complex prompts.
 
-**Third Model (lora_model_merged_3)**: TBD
+**Llama-3.2-1B-Instruct with dedup dataset (lora_model_merged_3)**: This 1B model was fine-tuned on the deduplicated Finetome dataset. Despite the cleaner training data, it did not outperform the other models in our evaluation. However, since we only tested the dedup dataset on the smaller 1B model, further evaluation of the deduplicated dataset on the 3B model could be worthwhile to isolate the impact of data quality from model capacity.
 
 ### Conclusion
 
