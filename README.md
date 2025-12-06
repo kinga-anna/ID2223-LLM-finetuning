@@ -1,10 +1,10 @@
 # Lab 2 for KTH course ID2223 Scalable Machine Learning and Deep Learning
 
-For this lab assignment we performed Parameter Efficient Fine-Tuning (PEFT) of a Large Language Model with LoRA on the Finetome dataset. Training was done on Google Colab's T4 GPU supplemented with additional RAM. Periodic checkpointing of the weigths was required due to Colab's usage limits, so that training can be restarted from where it left off. The fine tuned LLM is saved to Hugging Face and converted to a GGUF format since Hugging Face only provides free CPU resources for inference. Finally, this fine tuned LLM is available to be used in our chatbot [here]().
+For this lab assignment we performed Parameter Efficient Fine-Tuning (PEFT) of a Large Language Model with LoRA on the Finetome dataset. Training was done on Google Colab's T4 GPU supplemented with additional RAM. Periodic checkpointing of the weigths was required due to Colab's usage limits, so that training can be restarted from where it left off. The fine tuned LLM is saved to Hugging Face and converted to a GGUF format since Hugging Face only provides free CPU resources for inference. Finally, this fine tuned LLM is available to be used in our chatbot [here](https://chatbot-81yytoeishc.streamlit.app/).
 
 ## Task 2
-Next we investigated ways to improve pipeline scalability and model performance
-(a) model-centric ways to improve the model performance include changing the learning rate, the batch size, or the weight-deacy parameter, or even implementing early stopping. We might also focus on the LoRA configuration and ... \
+Next we investigated ways to improve pipeline scalability and model performance \
+(a) model-centric ways to improve the model performance include changing the learning rate, the batch size, or the weight-deacy parameter, or even implementing early stopping. We might also focus on the LoRA configuration and analyse the impact of different LoRA hyperparameters such as rank, alpha, and dropout. \
 (b) data-centric ways to improve include using a bigger or better dataset to train on. For one, we found a [deduplicated version of the Finetome 100K dataset](https://huggingface.co/datasets/mlabonne/FineTome-100k-dedup) we used, which is a pretty straight-forward way to get "better" data. Another idea we discussed was using a less generalised dataset of comparable size to create a more specialised chatbot.
 
 ## Comparing different foundation LLMS we have finetuned
